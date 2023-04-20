@@ -1,27 +1,24 @@
-const Difficulties = {
-  easy: { width: 9, height: 9, mines: 10 },
-  mediums: { width: 16, height: 16, mines: 40 },
-  hard: { width: 30, height: 16, mines: 99 },
-};
-
-interface Cell {
-  isMine: boolean;
-  isOpen: boolean;
-  surroundingMines: number;
-}
+import { DIFFICULTIES } from "@/constants";
 
 // This function will create a new board with the size and number of mines from the given difficulty. The board will be represented as a 2d array of cells.
 export default function makeBoard(
-  difficulty: keyof typeof Difficulties
-): Cell[][] {
-  const { width, height, mines } = Difficulties[difficulty];
+  difficulty: keyof typeof DIFFICULTIES
+): Board {
+  const { width, height, mines } = DIFFICULTIES[difficulty];
   const board: Cell[][] = [];
 
   // Create the board
   for (let row = 0; row < height; row++) {
     board.push([]);
     for (let col = 0; col < width; col++) {
-      board[row].push({ isMine: false, isOpen: false, surroundingMines: 0 });
+      board[row].push({
+        row,
+        col,
+        isMine: false,
+        isOpen: false,
+        isFlagged: false,
+        surroundingMines: 0,
+      });
     }
   }
 
