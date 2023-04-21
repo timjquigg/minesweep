@@ -1,6 +1,6 @@
 "use client";
 import { MouseEvent, useState, useContext, useEffect } from "react";
-import { BoardContext } from "@/proivders/boardProvider";
+import { BoardContext } from "@/providers/boardProvider";
 import revealBlanks from "@/lib/revealBlanks";
 
 type Props = {
@@ -9,12 +9,21 @@ type Props = {
 
 // This component is a cell in the game board
 export default function Cell({ cell }: Props) {
-  const { board, setGameOver, setGameWon, setGameLost, updateCell } =
-    useContext(BoardContext);
+  const {
+    board,
+    setGameOver,
+    setGameWon,
+    setGameLost,
+    updateCell,
+    revealBoard,
+  } = useContext(BoardContext);
 
-  let className = `w-10 h-10 flex justify-center items-center border-2 stext-black fill-black rounded-sm border-none m-1 hover:scale-110 `;
+  let className = `w-6 h-6 flex justify-center items-center text-black fill-black border-solid border-black border hover:scale-110 hover:border-solid `;
 
-  className += cell.isRevealed && !cell.isMine ? "bg-green-600" : "bg-red-600";
+  className +=
+    cell.isRevealed && !cell.isMine
+      ? "bg-gray-300"
+      : "bg-gray-400 box-shadow-md";
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -22,8 +31,9 @@ export default function Cell({ cell }: Props) {
     if (e.button === 0) {
       updateCell({ ...cell, isRevealed: true });
       if (cell.isMine) {
-        console.log("Game Over");
-        // Update game state
+        // Show all mines
+        revealBoard();
+
         setGameOver(true);
         setGameWon(false);
         setGameLost(true);
