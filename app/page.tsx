@@ -1,4 +1,5 @@
 import GameBoard from "@/components/gameBoard";
+import Results from "@/components/results";
 import BoardProvider from "@/proivders/boardProvider";
 import { Inter } from "next/font/google";
 
@@ -9,6 +10,7 @@ export default function Home() {
     <BoardProvider>
       <main>
         <GameBoard />
+        <Results />
       </main>
     </BoardProvider>
   );

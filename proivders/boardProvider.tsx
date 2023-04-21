@@ -1,7 +1,8 @@
 "use client";
 import { DIFFICULTIES } from "@/constants";
+import { checkBoard } from "@/lib/checkBoard";
 import makeBoard from "@/lib/makeBoard";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useCallback } from "react";
 // This function will return the game board context
 
 type Props = {
@@ -23,6 +24,7 @@ interface BoardContext {
   setGameStarted: (gameStarted: boolean) => void;
   setGamePaused: (gamePaused: boolean) => void;
   updateCell: (cell: Cell) => void;
+  reset: () => void;
 }
 
 export const BoardContext = createContext<BoardContext>({
@@ -40,6 +42,7 @@ export const BoardContext = createContext<BoardContext>({
   setGameStarted: () => {},
   setGamePaused: () => {},
   updateCell: () => {},
+  reset: () => {},
 });
 
 export default function BoardProvider({ children }: Props) {
@@ -52,10 +55,23 @@ export default function BoardProvider({ children }: Props) {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [gamePaused, setGamePaused] = useState<boolean>(false);
 
-  useEffect(() => {
+  const reset = () => {
+    setGameOver(false);
+    setGameWon(false);
+    setGameLost(false);
+    setGameStarted(false);
+    setGamePaused(false);
+    getNewBoard();
+  };
+
+  const getNewBoard = useCallback(() => {
     const newBoard = makeBoard(difficulty);
     setBoard(newBoard);
   }, [difficulty]);
+
+  useEffect(() => {
+    getNewBoard();
+  }, [getNewBoard]);
 
   // This will update a cell to show it has been clicked
   const updateCell = (cell: Cell) => {
@@ -63,6 +79,14 @@ export default function BoardProvider({ children }: Props) {
     newBoard[cell.row][cell.col] = cell;
     setBoard(newBoard);
   };
+
+  useEffect(() => {
+    const gameState = checkBoard(board);
+    if (gameState === true) {
+      setGameWon(true);
+      setGameOver(true);
+    }
+  }, [board, gameLost, gameOver, gameWon]);
 
   const value = {
     board,
@@ -79,6 +103,7 @@ export default function BoardProvider({ children }: Props) {
     setGameStarted,
     setGamePaused,
     updateCell,
+    reset,
   };
 
   return (

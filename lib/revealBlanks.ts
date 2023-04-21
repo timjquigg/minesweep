@@ -16,12 +16,12 @@
 //   }
 
 //   // If the cell is already open, return
-//   if (cell.isOpen) {
+//   if (cell.isRevealed) {
 //     return revealed;
 //   }
 
 //   // Open the cell
-//   cell.isOpen = true;
+//   cell.isRevealed = true;
 //   updateCell(cell);
 //   revealed++;
 
@@ -52,18 +52,18 @@ export default function revealBlanks(
 
   // If the cell is not empty, return
   if (cell.surroundingMines !== 0) {
-    updateCell({ ...cell, isOpen: true });
+    updateCell({ ...cell, isRevealed: true });
     revealed++;
     return revealed;
   }
 
   // If the cell is already open, return
-  if (cell.isOpen) {
+  if (cell.isRevealed) {
     return revealed;
   }
 
   // Open the cell
-  updateCell({ ...cell, isOpen: true });
+  updateCell({ ...cell, isRevealed: true });
   revealed++;
 
   // Recursively reveal the cells around it

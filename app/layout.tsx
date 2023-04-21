@@ -1,4 +1,5 @@
 import "./globals.css";
+import Title from "./title";
 
 export const metadata = {
   title: "Mine Sweep",
@@ -12,7 +13,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="max-w-xl mx-auto">
+        <Title />
+        {children}
+      </body>
     </html>
   );
 }

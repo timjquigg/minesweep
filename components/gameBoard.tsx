@@ -27,7 +27,7 @@ export default function GameBoard() {
     setBoardArray(
       board.map((row, rowIndex) => {
         return (
-          <div key={rowIndex} className="flex flex-row">
+          <div key={rowIndex} className="flex flex-row justify-center">
             {row.map((cell, cellIndex) => {
               return <Cell key={`${rowIndex}${cellIndex}`} cell={cell} />;
             })}
@@ -37,5 +37,5 @@ export default function GameBoard() {
     );
   }, [board]);
 
-  return <div>{boardArray}</div>;
+  return <div className="mx-auto">{boardArray}</div>;
 }

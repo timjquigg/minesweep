@@ -12,15 +12,15 @@ export default function Cell({ cell }: Props) {
   const { board, setGameOver, setGameWon, setGameLost, updateCell } =
     useContext(BoardContext);
 
-  const className = `w-10 h-10 flex justify-center items-center border-2 bg-red-600 text-black fill-black ${
-    cell.isOpen && !cell.isMine ? "bg-green-600" : "bg-red-600"
-  } hover:scale-110`;
+  let className = `w-10 h-10 flex justify-center items-center border-2 stext-black fill-black rounded-sm border-none m-1 hover:scale-110 `;
+
+  className += cell.isRevealed && !cell.isMine ? "bg-green-600" : "bg-red-600";
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (e.button === 0) {
-      updateCell({ ...cell, isOpen: true });
+      updateCell({ ...cell, isRevealed: true });
       if (cell.isMine) {
         console.log("Game Over");
         // Update game state
@@ -48,7 +48,7 @@ export default function Cell({ cell }: Props) {
       onClick={(e) => handleClick(e)}
       onContextMenu={(e) => handleClick(e)}
     >
-      {cell.isOpen ? (
+      {cell.isRevealed ? (
         cell?.isMine ? (
           <svg
             id="Layer_1"

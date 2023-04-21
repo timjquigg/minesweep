@@ -15,7 +15,7 @@ export default function makeBoard(
         row,
         col,
         isMine: false,
-        isOpen: false,
+        isRevealed: false,
         isFlagged: false,
         surroundingMines: 0,
       });

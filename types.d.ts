@@ -4,7 +4,7 @@ interface Cell {
   row: number;
   col: number;
   isMine: boolean;
-  isOpen: boolean;
+  isRevealed: boolean;
   isFlagged: boolean;
   surroundingMines: number;
 }
