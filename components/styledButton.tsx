@@ -63,9 +63,11 @@ export default function StyledButton(props: Props) {
       onClick={(event) => clickHandler(event)}
       autoFocus={false}
       disabled={props.disabled}
-      className={`relative overflow-hidden uppercase tracking-wider opacity-80 shadow-md my-auto 
-      hover:opacity-100 hover:scale-110 hover:shadow-xl hover:outline-none
-      focus:opacity-100 focus:scale-110 focus:shadow-xl focus:outline-none ${props.classes} `}
+      className={`relative overflow-hidden uppercase tracking-wider opacity-80 shadow-md my-auto ${
+        !props.disabled &&
+        "hover:opacity-100 hover:scale-110 hover:shadow-xl hover:outline-none focus:opacity-100 focus:scale-110 focus:shadow-xl focus:outline-none "
+      }
+      ${props.classes} `}
     >
       {props.children}
       <span className={className} style={style}></span>

@@ -11,7 +11,7 @@ import { solvePuzzle } from "@/lib/solvePuzzle";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { board, setGameOver, setGameLost, setGameWon } =
+  const { board, gameStarted, gameOver, setGameOver, setGameLost, setGameWon } =
     useContext(BoardContext);
 
   const handleClick = () => {
@@ -36,6 +36,7 @@ export default function Home() {
               id="Solve"
               classes="w-36 flex justify-center mx-auto "
               callback={handleClick}
+              disabled={gameOver || !gameStarted}
             >
               Solve Puzzle
             </StyledButton>
