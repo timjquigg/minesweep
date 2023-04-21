@@ -1,3 +1,4 @@
+import BoardProvider from "@/providers/boardProvider";
 import "./globals.css";
 import Title from "./title";
 
@@ -13,10 +14,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="max-w-4xl mx-auto bg-neutral-200">
-        <Title />
-        {children}
-      </body>
+      <BoardProvider>
+        <body className="max-w-4xl mx-auto bg-neutral-200">
+          <Title />
+          {children}
+        </body>
+      </BoardProvider>
     </html>
   );
 }
