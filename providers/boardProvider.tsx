@@ -2,7 +2,13 @@
 import { DIFFICULTIES } from "@/constants";
 import { checkBoard } from "@/lib/checkBoard";
 import makeBoard from "@/lib/makeBoard";
-import { useState, useEffect, createContext, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  createContext,
+  useCallback,
+  Dispatch,
+} from "react";
 // This function will return the game board context
 
 type Props = {
@@ -17,12 +23,14 @@ interface BoardContext {
   gameLost: boolean;
   gameStarted: boolean;
   gamePaused: boolean;
+  time: number;
   setDifficulty: (difficulty: keyof typeof DIFFICULTIES) => void;
   setGameOver: (gameOver: boolean) => void;
   setGameWon: (gameWon: boolean) => void;
   setGameLost: (gameLost: boolean) => void;
   setGameStarted: (gameStarted: boolean) => void;
   setGamePaused: (gamePaused: boolean) => void;
+  setTime: Dispatch<React.SetStateAction<number>>;
   updateCell: (cell: Cell) => void;
   reset: (dif?: keyof typeof DIFFICULTIES) => void;
   revealBoard: () => void;
@@ -36,12 +44,14 @@ export const BoardContext = createContext<BoardContext>({
   gameLost: false,
   gameStarted: false,
   gamePaused: false,
+  time: 0,
   setDifficulty: () => {},
   setGameOver: () => {},
   setGameWon: () => {},
   setGameLost: () => {},
   setGameStarted: () => {},
   setGamePaused: () => {},
+  setTime: () => {},
   updateCell: () => {},
   reset: (dif?: keyof typeof DIFFICULTIES) => {},
   revealBoard: () => {},
@@ -56,6 +66,7 @@ export default function BoardProvider({ children }: Props) {
   const [gameLost, setGameLost] = useState<boolean>(false);
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [gamePaused, setGamePaused] = useState<boolean>(false);
+  const [time, setTime] = useState<number>(0);
 
   const reset = (dif: keyof typeof DIFFICULTIES = difficulty) => {
     console.log("reset");
@@ -64,6 +75,7 @@ export default function BoardProvider({ children }: Props) {
     setGameLost(false);
     setGameStarted(false);
     setGamePaused(false);
+    setTime(0);
     getNewBoard(dif);
   };
 
@@ -83,6 +95,7 @@ export default function BoardProvider({ children }: Props) {
   const getNewBoard = useCallback((difficulty: keyof typeof DIFFICULTIES) => {
     const newBoard = makeBoard(difficulty);
     setBoard(newBoard);
+    setGameStarted(true);
   }, []);
 
   // This will update a cell to show it has been clicked
@@ -108,12 +121,14 @@ export default function BoardProvider({ children }: Props) {
     gameLost,
     gameStarted,
     gamePaused,
+    time,
     setDifficulty,
     setGameOver,
     setGameWon,
     setGameLost,
     setGameStarted,
     setGamePaused,
+    setTime,
     updateCell,
     reset,
     revealBoard,

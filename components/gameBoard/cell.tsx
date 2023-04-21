@@ -11,6 +11,7 @@ type Props = {
 export default function Cell({ cell }: Props) {
   const {
     board,
+    setGameStarted,
     setGameOver,
     setGameWon,
     setGameLost,
@@ -33,7 +34,7 @@ export default function Cell({ cell }: Props) {
       if (cell.isMine) {
         // Show all mines
         revealBoard();
-
+        setGameStarted(false);
         setGameOver(true);
         setGameWon(false);
         setGameLost(true);
