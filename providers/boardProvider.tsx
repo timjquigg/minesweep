@@ -24,7 +24,8 @@ interface BoardContext {
   setGameStarted: (gameStarted: boolean) => void;
   setGamePaused: (gamePaused: boolean) => void;
   updateCell: (cell: Cell) => void;
-  reset: () => void;
+  reset: (dif?: keyof typeof DIFFICULTIES) => void;
+  revealBoard: () => void;
 }
 
 export const BoardContext = createContext<BoardContext>({
@@ -42,7 +43,8 @@ export const BoardContext = createContext<BoardContext>({
   setGameStarted: () => {},
   setGamePaused: () => {},
   updateCell: () => {},
-  reset: () => {},
+  reset: (dif?: keyof typeof DIFFICULTIES) => {},
+  revealBoard: () => {},
 });
 
 export default function BoardProvider({ children }: Props) {
@@ -55,23 +57,32 @@ export default function BoardProvider({ children }: Props) {
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [gamePaused, setGamePaused] = useState<boolean>(false);
 
-  const reset = () => {
+  const reset = (dif: keyof typeof DIFFICULTIES = difficulty) => {
     setGameOver(false);
     setGameWon(false);
     setGameLost(false);
     setGameStarted(false);
     setGamePaused(false);
-    getNewBoard();
+    getNewBoard(dif);
   };
 
-  const getNewBoard = useCallback(() => {
+  // This will update the board to show all mines
+  const revealBoard = () => {
+    const newBoard = [...board];
+    newBoard.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.isMine) {
+          cell.isRevealed = true;
+        }
+      });
+    });
+    setBoard(newBoard);
+  };
+
+  const getNewBoard = useCallback((difficulty: keyof typeof DIFFICULTIES) => {
     const newBoard = makeBoard(difficulty);
     setBoard(newBoard);
-  }, [difficulty]);
-
-  useEffect(() => {
-    getNewBoard();
-  }, [getNewBoard]);
+  }, []);
 
   // This will update a cell to show it has been clicked
   const updateCell = (cell: Cell) => {
@@ -104,6 +115,7 @@ export default function BoardProvider({ children }: Props) {
     setGamePaused,
     updateCell,
     reset,
+    revealBoard,
   };
 
   return (

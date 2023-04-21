@@ -1,6 +1,6 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import { BoardContext } from "@/proivders/boardProvider";
+import { BoardContext } from "@/providers/boardProvider";
 import Cell from "./cell";
 
 // This function will return the game board
