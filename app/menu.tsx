@@ -41,17 +41,17 @@ export default function Menu({ show, setShow }: Props) {
           <div className="w-60 h-32 flex flex-col space-y-4 justify-center items-center  bg-neutral-200 bg-opacity-100 text-center">
             <ol className="space-y-2">
               <li className="">
-                <StyledButton id="easyMode" callback={easy}>
+                <StyledButton id="easyMode" classes="w-24" callback={easy}>
                   Easy
                 </StyledButton>
               </li>
               <li>
-                <StyledButton id="mediumMode" callback={medium}>
+                <StyledButton id="mediumMode" classes="w-24" callback={medium}>
                   Medium
                 </StyledButton>
               </li>
               <li>
-                <StyledButton id="hardMode" callback={hard}>
+                <StyledButton id="hardMode" callback={hard} classes="w-24">
                   Hard
                 </StyledButton>
               </li>
