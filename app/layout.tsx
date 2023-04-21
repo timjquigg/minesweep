@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <BoardProvider>
-        <body className="max-w-4xl mx-auto bg-neutral-200">
+        <body className="max-w-5xl mx-auto bg-neutral-200">
           <Title />
           {children}
         </body>

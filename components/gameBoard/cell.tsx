@@ -2,6 +2,7 @@
 import { MouseEvent, useState, useContext, useEffect } from "react";
 import { BoardContext } from "@/providers/boardProvider";
 import revealBlanks from "@/lib/revealBlanks";
+import revealSurrounding from "@/lib/revealSurrounding";
 
 type Props = {
   cell: Cell;
@@ -19,12 +20,42 @@ export default function Cell({ cell }: Props) {
     revealBoard,
   } = useContext(BoardContext);
 
-  let className = `w-6 h-6 flex justify-center items-center text-black fill-black border-solid border-black border hover:scale-110 hover:border-solid `;
+  let className = `w-6 h-6 flex justify-center items-center  border-solid border-black border hover:scale-110 hover:border-solid `;
 
   className +=
-    cell.isRevealed && !cell.isMine
-      ? "bg-gray-300"
-      : "bg-gray-400 box-shadow-md";
+    cell.isRevealed && !cell.isMine ? "bg-gray-300" : "bg-gray-400 shadow-xl";
+
+  if (cell.isRevealed) {
+    switch (cell.surroundingMines) {
+      case 1:
+        className += " text-blue-500";
+        break;
+      case 2:
+        className += " text-green-500";
+        break;
+      case 3:
+        className += " text-red-500";
+        break;
+      case 4:
+        className += " text-purple-500";
+        break;
+      case 5:
+        className += " text-yellow-500";
+        break;
+      case 6:
+        className += " text-pink-500";
+        break;
+      case 7:
+        className += " text-indigo-500";
+        break;
+      case 8:
+        className += " text-gray-500";
+        break;
+      default:
+        className += " text-gray-500";
+        break;
+    }
+  }
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -48,6 +79,20 @@ export default function Cell({ cell }: Props) {
     }
 
     if (e.button === 2) {
+      // If the cell is already revealed, reveal surrounding cells
+      if (cell.isRevealed) {
+        const result = revealSurrounding(board, cell, updateCell);
+        if (!result) {
+          // Show all mines
+          revealBoard();
+          setGameStarted(false);
+          setGameOver(true);
+          setGameWon(false);
+          setGameLost(true);
+          return;
+        }
+        return;
+      }
       updateCell({ ...cell, isFlagged: !cell.isFlagged });
       return;
     }
