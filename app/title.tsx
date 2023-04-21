@@ -19,7 +19,7 @@ export default function Title() {
         <div className="flex flex-row justify-end items-end flex-1">
           <div className="">
             <button className="m-2" onClick={handleClick}>
-              Difficulty
+              Set Difficulty
             </button>
           </div>
         </div>
