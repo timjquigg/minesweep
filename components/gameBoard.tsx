@@ -37,5 +37,9 @@ export default function GameBoard() {
     );
   }, [board]);
 
-  return <div className="mx-auto">{boardArray}</div>;
+  console.log("board", board);
+
+  return (
+    <div className="h-full flex flex-col justify-center my-8">{boardArray}</div>
+  );
 }

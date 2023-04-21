@@ -58,6 +58,7 @@ export default function BoardProvider({ children }: Props) {
   const [gamePaused, setGamePaused] = useState<boolean>(false);
 
   const reset = (dif: keyof typeof DIFFICULTIES = difficulty) => {
+    console.log("reset");
     setGameOver(false);
     setGameWon(false);
     setGameLost(false);
