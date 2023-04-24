@@ -3,7 +3,7 @@ import "./globals.css";
 import Title from "./title";
 
 export const metadata = {
-  title: "Mine Sweep",
+  title: "Mine Sweeper",
   description: "A minesweeper clone built with Next.js",
 };
 

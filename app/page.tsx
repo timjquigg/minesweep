@@ -31,15 +31,19 @@ export default function Home() {
         <GameBoard />
         <div className="flex flex-col items-end flex-1">
           <div className="m-2 space-y-4">
-            <Scorecard />
-            <StyledButton
-              id="Solve"
-              classes="w-36 flex justify-center mx-auto "
-              callback={handleClick}
-              disabled={gameOver || !gameStarted}
-            >
-              Solve Puzzle
-            </StyledButton>
+            {gameStarted && (
+              <>
+                <Scorecard />
+                <StyledButton
+                  id="Solve"
+                  classes="w-36 flex justify-center mx-auto "
+                  callback={handleClick}
+                  disabled={gameOver || !gameStarted}
+                >
+                  Solve Puzzle
+                </StyledButton>
+              </>
+            )}
           </div>
         </div>
       </div>
