@@ -66,7 +66,6 @@ export default function Cell({ cell }: Props) {
   }
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    console.log(e);
     e.preventDefault();
 
     if (e.button === 0) {
