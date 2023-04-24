@@ -20,7 +20,7 @@ export default function Cell({ cell }: Props) {
     revealBoard,
   } = useContext(BoardContext);
 
-  let className = `w-6 h-6 flex justify-center items-center  border-solid border-black border hover:scale-110 hover:border-solid `;
+  let className = `w-6 h-6 flex justify-center items-center border-solid border-black border hover:scale-110 hover:border-solid `;
 
   className +=
     cell.isRevealed && !cell.isMine ? "bg-gray-300" : "bg-gray-400 shadow-xl";
@@ -57,7 +57,16 @@ export default function Cell({ cell }: Props) {
     }
   }
 
+  if (cell.isMine && !cell.isFlagged && cell.isRevealed) {
+    className += " fill-red-500";
+  }
+
+  if (cell.isFlagged) {
+    className += " fill-red-500";
+  }
+
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    console.log(e);
     e.preventDefault();
 
     if (e.button === 0) {
@@ -78,7 +87,7 @@ export default function Cell({ cell }: Props) {
       return;
     }
 
-    if (e.button === 2) {
+    if (e.button === 2 || e.button === -1) {
       // If the cell is already revealed, reveal surrounding cells
       if (cell.isRevealed) {
         const result = revealSurrounding(board, cell, updateCell);
@@ -121,7 +130,6 @@ export default function Cell({ cell }: Props) {
         )
       ) : cell.isFlagged ? (
         <svg
-          fill="#000000"
           version="1.1"
           id="Capa_1"
           xmlns="http://www.w3.org/2000/svg"

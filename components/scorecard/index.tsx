@@ -1,4 +1,3 @@
-"use client";
 import MinesRemaining from "./minesRemaining";
 import Timer from "./timer";
 
