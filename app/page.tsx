@@ -26,10 +26,10 @@ export default function Home() {
 
   return (
     <main>
-      <div className="flex flex-row">
+      <div className="flex flex-col md:flex-row">
         <div className="flex-1"></div>
         <GameBoard />
-        <div className="flex flex-col items-end flex-1">
+        <div className="flex flex-col items-center md:items-end flex-1">
           <div className="m-2 space-y-4">
             {gameStarted && (
               <>

@@ -11,7 +11,7 @@ export default function Title() {
 
   return (
     <>
-      <div className="sticky top-0 w-full h-24 flex justify-center border-solid border-black border-b-4">
+      <div className="sticky top-0 w-full h-24 flex justify-center border-solid border-black border-b-4 bg-inherit">
         <div className="flex-1"></div>
         <h1 className="flex flex-col justify-center text-3xl font-serif font-bold">
           Mine Sweeper
