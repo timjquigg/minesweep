@@ -4,6 +4,7 @@ export const solvePuzzle = (board: Board): boolean => {
   let isSafe = true;
   board.forEach((row) => {
     row.forEach((cell) => {
+      if (cell.isFlagged) return;
       if (!cell.isRevealed) {
         cell.isRevealed = true;
         if (cell.isMine) {
