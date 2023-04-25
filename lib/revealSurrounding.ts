@@ -1,4 +1,6 @@
 import revealBlanks from "./revealBlanks";
+import checkSurrounding from "./checkSurrounding";
+import getSurroundingCells from "./getsurroundingCells";
 
 // This function will accept a board instance, a cell instance, and an update function. It will check all cells adjacent to the cell instance and call the update function on each of them, setting isRevealed to true. If any of the now revealed cells are a mine, it will return false. If all of the cells are revealed, it will return true.
 
@@ -10,35 +12,31 @@ export default function revealSurrounding(
   const { row, col } = cell;
   const height = board.length;
   const width = board[0].length;
+  let minesClear = true;
 
-  for (let i = row - 1; i <= row + 1; i++) {
-    for (let j = col - 1; j <= col + 1; j++) {
-      if (i < 0 || i >= height || j < 0 || j >= width) {
-        continue;
+  const surroundingCells = getSurroundingCells(board, row, col);
+
+  if (checkSurrounding(board, cell)) {
+    surroundingCells.forEach((cell) => {
+      if (cell.isRevealed) {
+        return;
       }
 
-      // If the cell is already open, continue
-      if (board[i][j].isRevealed) {
-        continue;
+      if (cell.isFlagged) {
+        return;
       }
 
-      // If the cell is a flag, continue
-      if (board[i][j].isFlagged) {
-        continue;
+      if (cell.surroundingMines === 0) {
+        revealBlanks(board, cell, updateCell);
       }
 
-      // If the cell is empty, reveal the cells around it
-      if (board[i][j].surroundingMines === 0) {
-        revealBlanks(board, board[i][j], updateCell);
+      if (cell.isMine && !cell.isFlagged) {
+        minesClear = false;
+        return;
       }
-
-      // If any of the cells are a mine, return false
-      if (board[i][j].isMine && !board[i][j].isFlagged) {
-        return false;
-      }
-      updateCell({ ...board[i][j], isRevealed: true });
-    }
+      updateCell({ ...cell, isRevealed: true });
+    });
   }
 
-  return true;
+  return minesClear;
 }
