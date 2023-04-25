@@ -38,6 +38,8 @@ export default function GameBoard() {
   }, [board]);
 
   return (
-    <div className="h-full flex flex-col justify-center my-8">{boardArray}</div>
+    <div className="h-full flex flex-col justify-center my-8 p-2">
+      {boardArray}
+    </div>
   );
 }
