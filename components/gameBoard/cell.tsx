@@ -20,7 +20,7 @@ export default function Cell({ cell }: Props) {
     revealBoard,
   } = useContext(BoardContext);
 
-  let className = `w-6 h-6 flex justify-center items-center border-solid border-black border hover:scale-110 hover:border-solid `;
+  let className = `w-6 h-6 flex justify-center items-center border-solid border-black border hover:scale-110 hover:border-solid select-none `;
 
   className +=
     cell.isRevealed && !cell.isMine ? "bg-gray-300" : "bg-gray-400 shadow-xl";
